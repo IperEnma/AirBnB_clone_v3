@@ -1,4 +1,5 @@
 $(document).ready(function () {
+  // checkbox
   const dict = {};
   $('input:checkbox').change(function () {
     if (this.checked) {
@@ -19,12 +20,16 @@ $(document).ready(function () {
       }
       length -= 1;
 	  });
-	  console.log(dict);
   });
-
+  // api status
   $(function () {
     $.get('http://0.0.0.0:5001/api/v1/status/', function (data, textStatus) {
-      alert('Done, with the following status: ' + textStatus + '. Here is the response: ' + data);
+      if (String(textStatus) === String('success')) {
+	  	$('#api_status').addClass('available');
+	   } else {
+	    $('#api_status').removeClass('available');
+	   }
     });
   });
+  // end
 });

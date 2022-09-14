@@ -19,6 +19,5 @@ $(document).ready(function () {
       }
       length -= 1;
 	  });
-	  console.log(dict);
   });
 });
