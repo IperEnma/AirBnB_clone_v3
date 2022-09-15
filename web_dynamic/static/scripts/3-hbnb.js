@@ -1,4 +1,3 @@
-
 $(document).ready(function () {
   // checkbox
   const dict = {};
