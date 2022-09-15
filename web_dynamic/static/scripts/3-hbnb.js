@@ -68,6 +68,16 @@ $(document).ready(function () {
           data: JSON.stringify({}),
           dataType: 'json',
           success: function (user) {
+            if (user.first_name == null) {
+              first_name = 'No';
+            } else {
+              first_name = user.first_name;
+            }
+            if (user.last_name == null) {
+              last_name = 'owner';
+            } else {
+              last_name = user.last_name;
+            }
             $('.places').append(
               '<article>' +
 						'<div class="title_box">' +
@@ -80,7 +90,7 @@ $(document).ready(function () {
             				'<div class="number_bathrooms">' + data[count].number_bathrooms + Bathroom + '</div>' +
 						'</div>' +
 						'<div class="user">' +
-							'<b>Owner:</b>' + user.first_name + ' ' + user.last_name +
+							'<b>Owner:</b>' + ' ' + first_name + ' ' + last_name +
 						'</div>' +
 						'<div class="description">' +
 							data[count].description +
