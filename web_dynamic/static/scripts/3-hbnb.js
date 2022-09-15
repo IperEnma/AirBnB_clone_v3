@@ -62,48 +62,37 @@ $(document).ready(function () {
           data[count].description = '';
         }
 
-        let result = '';
-        function user () {
-          let ret;
-    		$.ajax({
-        		type: 'GET',
-        		url: 'http://0.0.0.0:5001/api/v1/users/' + data[count].user_id,
-        		data: JSON.stringify({}),
-        		dataType: 'json',
-        		success: function (data) {
-                	ret = data;
-            }
-          });
-		  console.log(ret);
-          return ret;
-        }
-
-        result = user();
-		  console.log(result);
-
-	    $('.places').append(
-          '<article>' +
-				'<div class="title_box">' +
-					'<h2>' + data[count].name + '</h2>' +
-					'<div class="price_by_night">' + data[count].price_by_night + '</div>' +
-				'</div>' +
-				'<div class="information">' +
-					'<div class="max_guest">' + data[count].max_guest + guest + '</div>' +
-            		'<div class="number_rooms">' + data[count].number_rooms + Bedroom + '</div>' +
-            		'<div class="number_bathrooms">' + data[count].number_bathrooms + Bathroom + '</div>' +
-				'</div>' +
-				'<div class="user">' +
-					'<b>Owner:</b>' + data[count].user_id +
-				'</div>' +
-				'<div class="description">' +
-					data[count].description +
-				'</div>' +
-			'</article>');
-	  }
+        $.ajax({
+          type: 'GET',
+          url: 'http://0.0.0.0:5001/api/v1/users/' + data[count].user_id,
+          data: JSON.stringify({}),
+          dataType: 'json',
+          success: function (user) {
+            $('.places').append(
+              '<article>' +
+						'<div class="title_box">' +
+							'<h2>' + data[count].name + '</h2>' +
+							'<div class="price_by_night">' + data[count].price_by_night + '</div>' +
+						'</div>' +
+						'<div class="information">' +
+							'<div class="max_guest">' + data[count].max_guest + guest + '</div>' +
+            				'<div class="number_rooms">' + data[count].number_rooms + Bedroom + '</div>' +
+            				'<div class="number_bathrooms">' + data[count].number_bathrooms + Bathroom + '</div>' +
+						'</div>' +
+						'<div class="user">' +
+							'<b>Owner:</b>' + user.first_name + ' ' + user.last_name +
+						'</div>' +
+						'<div class="description">' +
+							data[count].description +
+						'</div>' +
+					'</article>');
+          }
+        });
+	   }
     },
     contentType: 'application/json',
     dataType: 'json'
-  });
+	  });
 
   // end
 });
