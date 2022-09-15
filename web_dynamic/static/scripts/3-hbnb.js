@@ -1,4 +1,3 @@
-
 $(document).ready(function () {
   // checkbox
   const dict = {};
@@ -43,67 +42,67 @@ $(document).ready(function () {
       let Bathroom = '';
       let guest = '';
 	  for (let count = 0; count < data.length; count++) {
-        $.ajax({
-          type: 'GET',
-          url: 'http://0.0.0.0:5001/api/v1/users/' + data[count].user_id,
-          data: JSON.stringify({}),
-          dataType: 'json',
-          success: function (user) {
-            if (user.first_name == null) {
-              first_name = 'No';
-            } else {
-              first_name = user.first_name;
-            }
-            if (user.last_name == null) {
-              last_name = 'owner';
-            } else {
-              last_name = user.last_name;
-            }
+        if (data[count].number_rooms > 1) {
+          Bedroom = ' Bedrooms';
+        } else {
+		    Bedroom = ' Bedroom';
+        }
+        if (data[count].number_bathrooms > 1) {
+          Bathroom = ' Bathrooms';
+        } else {
+		    Bathroom = ' Bathroom';
+        }
+        if (data[count].max_guest > 1) {
+          guest = ' Guests';
+        } else {
+		    guest = ' Guest';
+        }
+        if (data[count].description == null) {
+          data[count].description = '';
+        }
 
-        	if (data[count].number_rooms > 1) {
-              Bedroom = ' Bedrooms';
-        	} else {
-		      Bedroom = ' Bedroom';
-        	}
-        	if (data[count].number_bathrooms > 1) {
-          	  Bathroom = ' Bathrooms';
-        	} else {
-		      Bathroom = ' Bathroom';
-        	}
-        	if (data[count].max_guest > 1) {
-              guest = ' Guests';
-        	} else {
-		      guest = ' Guest';
-        	}
-        	if (data[count].description == null) {
-          	  data[count].description = '';
-        	}
+        let result = '';
+        function user () {
+          let ret;
+    		$.ajax({
+        		type: 'GET',
+        		url: 'http://0.0.0.0:5001/api/v1/users/' + data[count].user_id,
+        		data: JSON.stringify({}),
+        		dataType: 'json',
+        		success: function (data) {
+                	ret = data;
+            }
+          });
+		  console.log(ret);
+          return ret;
+        }
 
-            $('.places').append(
-              '<article>' +
-						'<div class="title_box">' +
-							'<h2>' + data[count].name + '</h2>' +
-							'<div class="price_by_night">' + data[count].price_by_night + '</div>' +
-						'</div>' +
-						'<div class="information">' +
-							'<div class="max_guest">' + data[count].max_guest + guest + '</div>' +
-            				'<div class="number_rooms">' + data[count].number_rooms + Bedroom + '</div>' +
-            				'<div class="number_bathrooms">' + data[count].number_bathrooms + Bathroom + '</div>' +
-						'</div>' +
-						'<div class="user">' +
-							'<b>Owner:</b>' + ' ' + first_name + ' ' + last_name +
-						'</div>' +
-						'<div class="description">' +
-							data[count].description +
-						'</div>' +
-					'</article>');
-          }
-        });
-	   }
+        result = user();
+		  console.log(result);
+
+	    $('.places').append(
+          '<article>' +
+				'<div class="title_box">' +
+					'<h2>' + data[count].name + '</h2>' +
+					'<div class="price_by_night">' + data[count].price_by_night + '</div>' +
+				'</div>' +
+				'<div class="information">' +
+					'<div class="max_guest">' + data[count].max_guest + guest + '</div>' +
+            		'<div class="number_rooms">' + data[count].number_rooms + Bedroom + '</div>' +
+            		'<div class="number_bathrooms">' + data[count].number_bathrooms + Bathroom + '</div>' +
+				'</div>' +
+				'<div class="user">' +
+					'<b>Owner:</b>' + data[count].user_id +
+				'</div>' +
+				'<div class="description">' +
+					data[count].description +
+				'</div>' +
+			'</article>');
+	  }
     },
     contentType: 'application/json',
     dataType: 'json'
-	  });
+  });
 
   // end
 });
