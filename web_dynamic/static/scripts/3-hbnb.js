@@ -43,25 +43,6 @@ $(document).ready(function () {
       let Bathroom = '';
       let guest = '';
 	  for (let count = 0; count < data.length; count++) {
-        if (data[count].number_rooms > 1) {
-          Bedroom = ' Bedrooms';
-        } else {
-		    Bedroom = ' Bedroom';
-        }
-        if (data[count].number_bathrooms > 1) {
-          Bathroom = ' Bathrooms';
-        } else {
-		    Bathroom = ' Bathroom';
-        }
-        if (data[count].max_guest > 1) {
-          guest = ' Guests';
-        } else {
-		    guest = ' Guest';
-        }
-        if (data[count].description == null) {
-          data[count].description = '';
-        }
-
         $.ajax({
           type: 'GET',
           url: 'http://0.0.0.0:5001/api/v1/users/' + data[count].user_id,
@@ -78,6 +59,26 @@ $(document).ready(function () {
             } else {
               last_name = user.last_name;
             }
+
+        	if (data[count].number_rooms > 1) {
+              Bedroom = ' Bedrooms';
+        	} else {
+		      Bedroom = ' Bedroom';
+        	}
+        	if (data[count].number_bathrooms > 1) {
+          	  Bathroom = ' Bathrooms';
+        	} else {
+		      Bathroom = ' Bathroom';
+        	}
+        	if (data[count].max_guest > 1) {
+              guest = ' Guests';
+        	} else {
+		      guest = ' Guest';
+        	}
+        	if (data[count].description == null) {
+          	  data[count].description = '';
+        	}
+
             $('.places').append(
               '<article>' +
 						'<div class="title_box">' +
